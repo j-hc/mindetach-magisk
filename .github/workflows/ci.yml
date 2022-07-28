@@ -1,0 +1,22 @@
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: cd mindetach; zip -r ../mindetach.zip .
+
+      - id: date
+        run: echo ::set-output name=date::$(date +'%Y%m%d')
+
+      - name: Upload module to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: mindetach.zip
+          release_name: mindetach-${{ steps.date.outputs.date }}
+          tag: ${{ steps.date.outputs.date }}
+          overwrite: true
