@@ -21,7 +21,7 @@ BEGIN
 	SELECT RAISE(FAIL, 'mindetach');
 END"
 	am force-stop com.android.vending
-	LD_LIBRARY_PATH=$MODDIR/lib $MODDIR/sqlite3 /data/data/com.android.vending/databases/library.db "$SQL"
+	$MODDIR/sqlite3 /data/data/com.android.vending/databases/library.db "$SQL"
 }
 
 detach
