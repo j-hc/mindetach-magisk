@@ -1,6 +1,6 @@
 id=mindetach
 name=mindetach
-version=v2
-versionCode=2
+version=v2.1
+versionCode=3
 author=j-hc
 description=Minimal module for detaching apps from Play Store
