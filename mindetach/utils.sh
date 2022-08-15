@@ -10,18 +10,18 @@ get_apps() {
 }
 
 disable_au() {
-	SQL="UPDATE appstate SET auto_update = 2 WHERE package_name IN (${1}) AND auto_update != 2;"
+	SQL="UPDATE appstate SET auto_update = 2 WHERE package_name IN (${1})"
 	$MODDIR/sqlite3 /data/data/com.android.vending/databases/localappstate.db "$SQL" 2>&1
 }
 
 detach() {
 	SQL="DROP TRIGGER IF EXISTS mindetach;
-UPDATE ownership SET doc_type = '25' WHERE doc_id IN (${1}) AND doc_type != '25';
+UPDATE ownership SET doc_type = '25' WHERE doc_id IN (${1});
 CREATE TRIGGER mindetach
 	BEFORE INSERT ON ownership
 	WHEN NEW.doc_id in (${1})
 BEGIN
 	SELECT RAISE(FAIL, 'mindetach');
-END;"
+END"
 	$MODDIR/sqlite3 /data/data/com.android.vending/databases/library.db "$SQL" 2>&1
 }
