@@ -4,7 +4,7 @@
 get_apps() {
 	det_apps=$(cat /sdcard/detach.txt || cat $MODDIR/detach.txt)
 	[ -z "$det_apps" ] && return 1
-	DETACH=$(echo "$det_apps" | tr -d ' ' | grep -v '^$' | sed "s/.*/'&'/" | paste -sd "," -) # -> 'com.app1','com.app2'
+	DETACH=$(echo "$det_apps" | tr -d ' \t\r' | grep -v '^$' | sed "s/.*/'&'/" | paste -sd "," -) # -> 'com.app1','com.app2'
 	[ -z "$DETACH" ] && return 1
 	echo "$DETACH"
 }
