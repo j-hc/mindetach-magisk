@@ -8,7 +8,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build
-        run: cd mindetach; zip -r ../mindetach.zip .
+        run: |
+          cd mindetach; zip -r ../mindetach-$(grep version= module.prop | cut -d= -f2).zip .
 
       - id: date
         run: echo ::set-output name=date::$(date +'%Y%m%d')
@@ -16,7 +17,8 @@ jobs:
       - name: Upload module to release
         uses: svenstaro/upload-release-action@v2
         with:
-          file: mindetach.zip
+          file: mindetach-*.zip
           release_name: mindetach-${{ steps.date.outputs.date }}
           tag: ${{ steps.date.outputs.date }}
           overwrite: true
+          file_glob: true

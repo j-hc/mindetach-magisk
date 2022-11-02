@@ -4,7 +4,7 @@
 get_apps() {
 	det_apps=$(cat /sdcard/detach.txt || cat $MODDIR/detach.txt)
 	[ -z "$det_apps" ] && return 1
-	DETACH=$(echo "$det_apps" | tr -d ' \t\r' | grep -v '^$' | sed "s/.*/'&'/" | paste -sd "," -) # -> 'com.app1','com.app2'
+	DETACH=$(echo "$det_apps" | tr -d ' \t\r' | grep -v '^$' | sed "s/.*/'&'/" | paste -sd "," -)
 	[ -z "$DETACH" ] && return 1
 	echo "$DETACH"
 }
@@ -24,4 +24,9 @@ BEGIN
 	SELECT RAISE(FAIL, 'mindetach');
 END"
 	$MODDIR/sqlite3 /data/data/com.android.vending/databases/library.db "$SQL" 2>&1
+}
+
+clear_iq() {
+	SQL="DELETE FROM install_requests WHERE pk IN (${1})"
+	$MODDIR/sqlite3 /data/data/com.android.vending/databases/install_queue.db "$SQL" 2>&1
 }

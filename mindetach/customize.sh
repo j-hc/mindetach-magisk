@@ -31,6 +31,11 @@ APPS=$(get_apps) && {
 		ui_print "    $op"
 		ui_print ""
 	fi
+
+	ui_print "- Clearing install queue.."
+	if ! op=$(clear_iq "$APPS"); then
+		"- No queue was cleared"
+	fi
 }
 
 if [ $succes = false ]; then
