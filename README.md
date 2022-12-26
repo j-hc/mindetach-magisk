@@ -17,8 +17,4 @@ com.google.android.youtube
 com.someotherapp
 ```
 
-Apps will be detached from Play Store once you flash the module.
-
-## Uninstall
-* Remove the module from Magisk app
-* Clear the data of Play Store
+Apps will be detached from Play Store once you flash the module, and reattached one you remove it.

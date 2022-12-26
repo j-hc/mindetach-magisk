@@ -1,5 +1,6 @@
 #!/system/bin/sh
 # shellcheck disable=SC2086
+DBS=/data/data/com.android.vending/databases
 
 get_apps() {
 	det_apps=$(cat /sdcard/detach.txt || cat $MODDIR/detach.txt)
@@ -11,7 +12,7 @@ get_apps() {
 
 disable_au() {
 	SQL="UPDATE appstate SET auto_update = 2 WHERE package_name IN (${1})"
-	$MODDIR/sqlite3 /data/data/com.android.vending/databases/localappstate.db "$SQL" 2>&1
+	$MODDIR/sqlite3 $DBS/localappstate.db "$SQL" 2>&1
 }
 
 detach() {
@@ -23,10 +24,15 @@ CREATE TRIGGER mindetach
 BEGIN
 	SELECT RAISE(FAIL, 'mindetach');
 END"
-	$MODDIR/sqlite3 /data/data/com.android.vending/databases/library.db "$SQL" 2>&1
+	$MODDIR/sqlite3 $DBS/library.db "$SQL" 2>&1
 }
 
+reattach() {
+	SQL="DROP TRIGGER IF EXISTS mindetach;
+UPDATE ownership SET doc_type = '1' WHERE doc_id IN (${1});"
+	$MODDIR/sqlite3 $DBS/library.db "$SQL" 2>&1
+}
 clear_iq() {
 	SQL="DELETE FROM install_requests WHERE pk IN (${1})"
-	$MODDIR/sqlite3 /data/data/com.android.vending/databases/install_queue.db "$SQL" 2>&1
+	$MODDIR/sqlite3 $DBS/install_queue.db "$SQL" 2>&1
 }

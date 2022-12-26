@@ -42,6 +42,7 @@ if [ $succes = false ]; then
 	if [ -d /data/data/com.android.vending ]; then
 		ui_print "- Do not clean the data of Play Store"
 		ui_print "- Open Play Store and reflash mindetach again!"
+		abort ""
 	else
 		ui_print "- Immediate detach was not successful"
 		ui_print "- This may be because you are not using Magisk Manager"
