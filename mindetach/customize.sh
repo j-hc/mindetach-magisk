@@ -14,7 +14,7 @@ MODDIR=$MODPATH
 . $MODPATH/utils.sh
 
 succes=true
-APPS=$(get_apps) && {
+if APPS=$(get_apps); then
 	ui_print "- Disabling Auto-Update.."
 	am force-stop com.android.vending
 	if ! op=$(disable_au "$APPS"); then
@@ -33,10 +33,10 @@ APPS=$(get_apps) && {
 	fi
 
 	ui_print "- Clearing install queue.."
-	if ! op=$(clear_iq "$APPS"); then
-		"- No queue was cleared"
-	fi
-}
+	clear_iq "$APPS"
+else
+	ui_print "- No app to detach was found"
+fi
 
 if [ $succes = false ]; then
 	if [ -d /data/data/com.android.vending ]; then

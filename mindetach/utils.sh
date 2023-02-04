@@ -17,13 +17,21 @@ disable_au() {
 
 detach() {
 	SQL="DROP TRIGGER IF EXISTS mindetach;
+DROP TRIGGER IF EXISTS mindetach_up;
 UPDATE ownership SET doc_type = '25' WHERE doc_id IN (${1});
 CREATE TRIGGER mindetach
 	BEFORE INSERT ON ownership
 	WHEN NEW.doc_id in (${1})
 BEGIN
 	SELECT RAISE(FAIL, 'mindetach');
-END"
+END;
+CREATE TRIGGER mindetach_up
+	BEFORE UPDATE ON ownership
+	WHEN NEW.doc_id in (${1})
+BEGIN
+	SELECT RAISE(FAIL, 'mindetach_up');
+END;
+"
 	$MODDIR/sqlite3 $DBS/library.db "$SQL" 2>&1
 }
 
