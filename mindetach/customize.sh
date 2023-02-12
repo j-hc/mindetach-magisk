@@ -1,44 +1,16 @@
 # shellcheck disable=SC2148,SC2086
-if [ "$ARCH" = "arm" ]; then
-	mv -f $MODPATH/sqlite3-arm $MODPATH/sqlite3
-elif [ "$ARCH" = "arm64" ]; then
-	mv -f $MODPATH/sqlite3-arm64 $MODPATH/sqlite3
-else
-	abort "ERROR: unsupported arch: ${ARCH}"
-fi
 
-rm $MODPATH/sqlite3-*
-chmod +x $MODPATH/sqlite3
+mv -f $MODPATH/sqlite3-${ARCH} $MODPATH/sqlite3
+mv -f $MODPATH/detacher-${ARCH} $MODPATH/detacher
+rm $MODPATH/sqlite3-* $MODPATH/detacher-*
+chmod +x $MODPATH/detacher $MODPATH/sqlite3
 
-MODDIR=$MODPATH
-. $MODPATH/utils.sh
+am force-stop com.android.vending
+OP=$($MODPATH/detacher 2>&1)
+C=$?
+ui_print "$OP"
 
-succes=true
-if APPS=$(get_apps); then
-	ui_print "- Disabling Auto-Update.."
-	am force-stop com.android.vending
-	if ! op=$(disable_au "$APPS"); then
-		succes=false
-		ui_print "- WARNING:"
-		ui_print "    $op"
-		ui_print ""
-	fi
-
-	ui_print "- Detaching.."
-	if ! op=$(detach "$APPS"); then
-		succes=false
-		ui_print "- WARNING:"
-		ui_print "    $op"
-		ui_print ""
-	fi
-
-	ui_print "- Clearing install queue.."
-	clear_iq "$APPS"
-else
-	ui_print "- No app to detach was found"
-fi
-
-if [ $succes = false ]; then
+if [ $C = 1 ]; then
 	if [ -d /data/data/com.android.vending ]; then
 		ui_print "- Do not clean the data of Play Store"
 		ui_print "- Open Play Store and reflash mindetach again!"
@@ -49,6 +21,5 @@ if [ $succes = false ]; then
 		ui_print "- mindetach will only work after a reboot!"
 	fi
 fi
-
 ui_print ""
 ui_print "  by j-hc (github.com/j-hc)"
