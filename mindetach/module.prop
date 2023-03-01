@@ -1,7 +1,7 @@
 id=mindetach
 name=mindetach
-version=v3.2
-versionCode=10
+version=v3.3
+versionCode=11
 author=j-hc
 description=Minimal module for detaching apps from Play Store
 updateJson=https://raw.githubusercontent.com/j-hc/mindetach-magisk/master/update.json

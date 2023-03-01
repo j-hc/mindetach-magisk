@@ -1,6 +1,6 @@
 {
-	"version": "v3.2",
-	"versionCode": 10,
-	"zipUrl": "https://github.com/j-hc/mindetach-magisk/releases/latest/download/mindetach-v3.2.zip",
+	"version": "v3.3",
+	"versionCode": 11,
+	"zipUrl": "https://github.com/j-hc/mindetach-magisk/releases/latest/download/mindetach-v3.3.zip",
 	"changelog": "https://raw.githubusercontent.com/j-hc/mindetach-magisk/master/README.md"
 }
