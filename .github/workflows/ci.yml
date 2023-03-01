@@ -8,17 +8,17 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build
+        id: build
         run: |
-          cd mindetach; zip -r ../mindetach-$(grep version= module.prop | cut -d= -f2).zip .
-
-      - id: date
-        run: echo ::set-output name=date::$(date +'%Y%m%d')
+          cd mindetach
+          VER=$(grep version= module.prop | cut -d= -f2)
+          echo "VER=$VER" >> $GITHUB_OUTPUT
+          zip -r "../mindetach-${VER}.zip" .
 
       - name: Upload module to release
         uses: svenstaro/upload-release-action@v2
         with:
-          file: mindetach-*.zip
-          release_name: mindetach-${{ steps.date.outputs.date }}
-          tag: ${{ steps.date.outputs.date }}
+          file: mindetach-${{ steps.build.outputs.VER }}.zip
+          release_name: mindetach-${{ steps.build.outputs.VER }}
+          tag: ${{ steps.build.outputs.VER }}
           overwrite: true
-          file_glob: true

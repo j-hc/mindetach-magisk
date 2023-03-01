@@ -7,3 +7,4 @@ sleep 20
 
 am force-stop com.android.vending
 $MODDIR/detacher
+am force-stop com.android.vending
