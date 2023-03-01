@@ -1,12 +1,12 @@
 # shellcheck disable=SC2148,SC2086
 
-mv -f $MODPATH/sqlite3-${ARCH} $MODPATH/sqlite3
 mv -f $MODPATH/detacher-${ARCH} $MODPATH/detacher
-rm $MODPATH/sqlite3-* $MODPATH/detacher-*
-chmod +x $MODPATH/detacher $MODPATH/sqlite3
+rm $MODPATH/detacher-*
+chmod +x $MODPATH/detacher
 
 am force-stop com.android.vending
-OP=$($MODPATH/detacher 2>&1)
+OP=$($MODPATH/detacher)
+am force-stop com.android.vending
 C=$?
 ui_print "$OP"
 
