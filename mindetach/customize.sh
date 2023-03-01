@@ -4,6 +4,9 @@ mv -f $MODPATH/detacher-${ARCH} $MODPATH/detacher
 rm $MODPATH/detacher-*
 chmod +x $MODPATH/detacher
 
+# preserve detach.txt
+cp -f $NVBASE/modules/mindetach/detach.txt $MODPATH/detach.txt
+
 am force-stop com.android.vending
 OP=$($MODPATH/detacher)
 am force-stop com.android.vending
