@@ -6,17 +6,16 @@ if [ ! -d /data/data/com.android.vending/databases ]; then
 	abort ""
 fi
 
-mv -f $MODPATH/detacher-${ARCH} $MODPATH/detacher
-rm $MODPATH/detacher-*
-chmod +x $MODPATH/detacher
+mv -f $MODPATH/system/bin/mindetach-${ARCH} $MODPATH/system/bin/mindetach
+rm $MODPATH/system/bin/mindetach-*
 
 # preserve detach.txt
 cp -f $NVBASE/modules/mindetach/detach.txt $MODPATH/detach.txt
 
 am force-stop com.android.vending
-OP=$($MODPATH/detacher)
-am force-stop com.android.vending
+OP=$($MODPATH/system/bin/mindetach)
 C=$?
+am force-stop com.android.vending
 ui_print "$OP"
 
 if [ $C = 1 ]; then

@@ -1,4 +1,8 @@
 *.db
 *.py
 *.zip
-t*t.sh
+t.sh
+b.sh
+Cargo.lock
+detacher/target
+detacher/rust-toolchain
