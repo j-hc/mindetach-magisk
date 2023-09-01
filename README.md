@@ -1,3 +1,5 @@
+#### ⚠️ You can instead use the more reliable [zygisk-detach](https://github.com/j-hc/zygisk-detach) module
+
 # mindetach magisk module
 
 Magisk module to detach apps from Play Store  
